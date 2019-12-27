@@ -38,7 +38,7 @@ node {
     }
        stage('Pruebas') {
        dir('pruebas') {
-      git branch: ${env.BRANCH_NAME}, url: 'https://github.com/abelgza/api_project_tester.git'
+      git branch: 'dev', url: 'https://github.com/abelgza/api_project_tester.git'
       bat label:'se descarga el código de pruebas ROBOT', script:"robot *.robot"
    }
    }
