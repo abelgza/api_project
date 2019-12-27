@@ -34,8 +34,13 @@ node {
       bat label: 'npm install', script: 'npm install'
     }
     stage ('Deploy') {
-      bat label: 'Se inicializa con pm2', script: 'C:\\Users\\aagonzalez\\AppData\\Roaming\\npm\\pm2 start server/server.js --name dev_project'
+      bat label: 'Se inicializa con pm2', script: 'C:\Users\aagonzalez\AppData\Roaming\npm\pm2 start server/server.js --name dev_project'
     }
+       stage('Pruebas') {
+       dir('pruebas') {
+      git branch: ${env.BRANCH_NAME}, url: 'https://github.com/abelgza/api_project_tester.git'
+      bat label:'se descarga el código de pruebas ROBOT', script:"robot *.robot"
+   }
   }
   else {
     bat label: 'Branch Incorrecto', script: 'echo "No se identifica el branch"'
