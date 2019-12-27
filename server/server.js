@@ -4,7 +4,7 @@ var morgan = require('morgan');
 var eventsRouter = require('./routers/events-router');
 
 var app = express();
-var port = 3000;
+var port = 3100;
 
 app.use(morgan('dev'));
 app.use(express.static('client'));
