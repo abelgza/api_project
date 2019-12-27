@@ -34,7 +34,7 @@ node {
       bat label: 'npm install', script: 'npm install'
     }
     stage ('Deploy') {
-      bat label: 'Se inicializa con pm2', script: 'C:\Users\aagonzalez\AppData\Roaming\npm\pm2 start server/server.js --name dev_project'
+      bat label: 'Se inicializa con pm2', script: 'C:\\Users\\aagonzalez\\AppData\\Roaming\\npm\\pm2 start server/server.js --name dev_project'
     }
   }
   else {
