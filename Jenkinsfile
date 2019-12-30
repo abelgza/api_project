@@ -36,17 +36,23 @@ node {
     stage ('Deploy') {
       bat label: 'Se inicializa con pm2', script: 'C:\\Users\\aagonzalez\\AppData\\Roaming\\npm\\pm2 start server/server.js --name dev_project'
     }
-    dir('pruebas') {
-      stage('Descarga de pruebas') {
-        echo "se descarga el código de pruebas"
-        git branch: 'dev', url: 'https://github.com/abelgza/api_project_tester.git'
+    try {
+      dir('pruebas') {
+        stage('Descarga de pruebas') {
+          echo "se descarga el código de pruebas"
+          git branch: 'dev', url: 'https://github.com/abelgza/api_project_tester.git'
+        }
+        stage('Pruebas Robot') {
+          bat label:' Se ejecuta la prueba con robot', script:"robot *.robot"
+        }
+        stage('Pruebas Newman') {
+          bat label:'Se ejecuta prueba con newman', script:"C:\\Users\\aagonzalez\\AppData\\Roaming\\npm\\newman run newman_tester.json -r html"
+        }
       }
-      stage('Pruebas Robot') {
-        bat label:' Se ejecuta la prueba con robot', script:"robot *.robot"
-      }
-      stage('Pruebas Newman') {
-        bat label:'Se ejecuta prueba con newman', script:"C:\\Users\\aagonzalez\\AppData\\Roaming\\npm\\newman run newman_tester.json -r html"
-      }
+      bat label: 'Se genera el ZIP de la evidencia', script: 'jar -cMf pruebas.zip pruebas'
+    } catch (Exception err) {
+      echo "Hubo errores, se realiza Rollback"
+        bat label:' Rollback y se elimina de pm2', script:"pm2 delete dev_project"
     }
   }
   else {
