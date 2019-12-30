@@ -27,7 +27,8 @@ node {
   }
 
   else if (env.BRANCH_NAME == 'dev') {
-    stage ('Inicio DEV') {
+    try {
+      stage ('Inicio DEV') {
       bat label: 'Se inicia en DEV', script: 'echo "Se inicia proceso en DEV, puerto 3100"'
     }
     stage ('Se descarga del repo') {
@@ -36,7 +37,6 @@ node {
     stage ('Deploy') {
       bat label: 'Se inicializa con pm2', script: 'C:\\Users\\aagonzalez\\AppData\\Roaming\\npm\\pm2 start server/server.js --name dev_project'
     }
-    try {
       dir('pruebas') {
         stage('Descarga de pruebas') {
           echo "se descarga el código de pruebas"
