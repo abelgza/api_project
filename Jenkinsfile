@@ -52,7 +52,8 @@ node {
       bat label: 'Se genera el ZIP de la evidencia', script: 'jar -cMf pruebas.zip pruebas'
     } catch (Exception err) {
       echo "Hubo errores, se realiza Rollback"
-        bat label:' Rollback y se elimina de pm2', script:"pm2 delete dev_project"
+      bat label:' Rollback y se elimina de pm2', script:"pm2 delete dev_project"
+      currentBuild.result = 'FAILURE'
     }
   }
   else {
