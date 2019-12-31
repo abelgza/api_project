@@ -1,4 +1,5 @@
 //multibranch pipelines
+@Library('pipeline-library-demo')_
 node {
   checkout scm
 
